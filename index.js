@@ -93,11 +93,12 @@ function dragElement(elmnt) {
     pos3 = 0,
     pos4 = 0;
   
-  if (document.getElementById(elmnt.id + "header")) {
-    /* if present, the header is where you move the DIV from:*/
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  const header = elmnt.querySelector(`#${elmnt.id}header`);
+  if (header) {
+    header.style.cursor = 'move';
+    header.onmousedown = dragMouseDown;
   } else {
-    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.style.cursor = 'move';
     elmnt.onmousedown = dragMouseDown;
   }
 
@@ -120,13 +121,13 @@ function dragElement(elmnt) {
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    // set the element's new position:
+    // calculate the new element position:
     elmnt.style.top = elmnt.offsetTop - pos2 + "px";
     elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
   }
 
   function closeDragElement() {
-    /* stop moving when mouse button is released:*/
+    // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
   }
