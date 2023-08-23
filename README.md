@@ -1,4 +1,4 @@
-# Mod-GUI
+# Mod-GUI (VERY BUGGY)
 WIP GUI Library for browser mod menus or hacks.
 
 ## Overview
