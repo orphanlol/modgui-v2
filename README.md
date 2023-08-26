@@ -23,6 +23,12 @@ This library provides a basic way to create GUI menus and buttons using JavaScri
 const mainMenu = modGUI.createMenu('Main Menu', 'main-menu', 'absolute', '20px', '20px');
 modGUI.addButton(mainMenu, 'Button 1', () => alert('Button 1 clicked'));
 modGUI.addButton(mainMenu, 'Button 2', () => alert('Button 2 clicked'));
+modGUI.addSlider(
+  mainMenu,
+  'Slider 1',
+  0, 100, 50,
+  value => console.log(`Slider 1 value: ${value}`)
+);
 
 // Create overlay
 let overlay = modGUI.createLiveOverlay('lol')
