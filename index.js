@@ -51,6 +51,7 @@ function createLiveOverlay(headerText) {
   header.textContent = headerText;
   overlayDiv.appendChild(header);
   document.body.appendChild(overlayDiv);
+  return overlayDiv
 }
 
 // Function to render the menus and buttons
