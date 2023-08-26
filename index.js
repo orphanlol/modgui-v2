@@ -12,6 +12,7 @@ window.modGUI = {
       top,
       left,
       buttons: [],
+      sliders: [],
     };
     
     modGUI.GUI.menus.push(menu);
@@ -31,6 +32,18 @@ window.modGUI = {
     };
     
     menu.buttons.push(button);
+  },
+
+  addSlider(menu, label, min, max, value, onChange) {
+    const slider = {
+      label,
+      min,
+      max,
+      value,
+      onChange,
+    };
+    
+    menu.sliders.push(slider);
   },
   
   createLiveOverlay(headerText) {
@@ -107,6 +120,34 @@ window.modGUI = {
         
         menuContainer.appendChild(buttonElem);
       });
+
+      menu.sliders.forEach(slider => {
+          const sliderContainer = document.createElement('div'); // Create a container for the slider
+          sliderContainer.style.marginBottom = '10px';
+          
+          const sliderHeader = document.createElement('div'); // Create header for slider
+          sliderHeader.textContent = slider.label;
+          sliderHeader.style.fontWeight = 'bold';
+          sliderHeader.style.textAlign = 'center';
+          sliderContainer.appendChild(sliderHeader);
+          
+          const sliderInput = document.createElement('input');
+          sliderInput.type = 'range';
+          sliderInput.min = slider.min;
+          sliderInput.max = slider.max;
+          sliderInput.value = slider.value;
+          sliderInput.style.width = '100%';
+          sliderInput.style.padding = '0';
+          sliderInput.style.margin = '0';
+          
+          sliderInput.addEventListener('input', () => {
+            slider.onChange(sliderInput.value); // Use sliderInput.value here
+          });
+          
+          sliderContainer.appendChild(sliderInput);
+          menuContainer.appendChild(sliderContainer);
+      });
+      
       
       document.body.appendChild(menuContainer);
   
