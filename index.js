@@ -18,6 +18,10 @@ window.modGUI = {
     
     return menu;
   },
+
+  getMenu(menu) {
+    return document.getElementById(menu.id)
+  },
   
   // Function to add a button to a menu
   addButton(menu, label, callback) {
