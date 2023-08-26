@@ -30,14 +30,14 @@ let overlay = modGUI.createLiveOverlay('lol')
 window.addEventListener('keydown', (event) => {
   if (event.code === 'ShiftRight') {
       if (
-        document.getElementById(mainMenu.id).style.display === 'none' &&
+        modGUI.getMenu(mainMenu).style.display === 'none' &&
         overlay.style.display === 'none'
       ) {
-        document.getElementById(mainMenu.id).style.display = 'block';
+        modGUI.getMenu(mainMenu).style.display = 'block';
         overlay.style.display = 'block';
         document.exitPointerLock(); //if needed
       } else {
-        document.getElementById(mainMenu.id).style.display = 'none';
+        modGUI.getMenu(mainMenu).style.display = 'none';
         overlay.style.display = 'none';
       }
   }
