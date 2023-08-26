@@ -18,11 +18,32 @@ This library provides a basic way to create GUI menus and buttons using JavaScri
 3. Use the provided functions to create menus and buttons, and then call `renderGUI()` to display the GUI.
 
 ```javascript
-// Example usage
-const mainMenu = createMenu('Main Menu', 'main-menu', 'absolute', '20px', '20px');
-addButton(mainMenu, 'Button 1', () => alert('Button 1 clicked'));
-addButton(mainMenu, 'Button 2', () => alert('Button 2 clicked'));
 
-// Call renderGUI to display the GUI
-renderGUI();
+// Create main menu w/ buttons
+const mainMenu = modGUI.createMenu('Main Menu', 'main-menu', 'absolute', '20px', '20px');
+modGUI.addButton(mainMenu, 'Button 1', () => alert('Button 1 clicked'));
+modGUI.addButton(mainMenu, 'Button 2', () => alert('Button 2 clicked'));
+
+// Create overlay
+let overlay = modGUI.createLiveOverlay('lol')
+
+window.addEventListener('keydown', (event) => {
+  if (event.code === 'ShiftRight') {
+      if (
+        document.getElementById(mainMenu.id).style.display === 'none' &&
+        overlay.style.display === 'none'
+      ) {
+        document.getElementById(mainMenu.id).style.display = 'block';
+        overlay.style.display = 'block';
+        document.exitPointerLock(); //if needed
+      } else {
+        document.getElementById(mainMenu.id).style.display = 'none';
+        overlay.style.display = 'none';
+      }
+  }
+});
+
+// Call render to display the GUI
+modGUI.render();
+
 ```
