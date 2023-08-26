@@ -91,9 +91,41 @@ window.modGUI = {
       // Create header for dragging
       const menuHeader = document.createElement('div');
       menuHeader.id = `${menu.id}header`;
+      menuHeader.style.fontWeight = 'bold';
+      menuHeader.style.textAlign = 'center';
+      menuHeader.style.fontSize = '25px'
       menuHeader.style.cursor = 'move';
       menuHeader.style.padding = '5px';
       menuHeader.textContent = menu.title;
+      // Create minimize button
+      const minimizeButton = document.createElement('button');
+      minimizeButton.textContent = '-';
+      minimizeButton.style.float = 'right';
+      minimizeButton.style.border = 'none';
+      minimizeButton.style.backgroundColor = 'transparent';
+      minimizeButton.style.color = '#fff';
+      minimizeButton.style.fontSize = '20px';
+      minimizeButton.style.cursor = 'pointer';
+      minimizeButton.style.outline = 'none';
+      minimizeButton.style.padding = '0';
+      
+      const animationDuration = 300; // Animation duration in milliseconds
+      let isCollapsed = false;
+    
+      // Handle collapsing when clicking the minimize button
+      minimizeButton.addEventListener('click', () => {
+        isCollapsed = !isCollapsed;
+        if (isCollapsed) {
+          menuContainer.style.height = '50px';
+          menuContainer.style.overflow = 'hidden';
+        } else {
+          menuContainer.style.height = 'auto';
+          menuContainer.style.overflow = 'visible';
+        }
+        menuContainer.style.transition = `height ${animationDuration}ms ease, overflow ${animationDuration}ms ease`;
+      });
+    
+      menuHeader.appendChild(minimizeButton);
       menuContainer.appendChild(menuHeader);
       
       menu.buttons.forEach(button => {
@@ -127,8 +159,8 @@ window.modGUI = {
           
           const sliderHeader = document.createElement('div'); // Create header for slider
           sliderHeader.textContent = slider.label;
-          sliderHeader.style.fontWeight = 'bold';
-          sliderHeader.style.textAlign = 'center';
+          sliderHeader.style.cursor = 'move';
+          sliderHeader.style.padding = '5px';
           sliderContainer.appendChild(sliderHeader);
           
           const sliderInput = document.createElement('input');
@@ -136,9 +168,21 @@ window.modGUI = {
           sliderInput.min = slider.min;
           sliderInput.max = slider.max;
           sliderInput.value = slider.value;
+        
+          // Style the slider to match the button's appearance
           sliderInput.style.width = '100%';
+          sliderInput.style.height = '20px'; // Adjust the height to match the button
           sliderInput.style.padding = '0';
           sliderInput.style.margin = '0';
+          sliderInput.style.appearance = 'none'; // Hide the default appearance
+          sliderInput.style.background = 'transparent'; // Hide the default track
+        
+          // Style the slider thumb (dot)
+          sliderInput.style.border = 'none'; // Hide the dot
+          sliderInput.style.cursor = 'pointer';
+          sliderInput.style.borderRadius = '5px'; // Match the button's border radius
+          sliderInput.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+          sliderInput.style.transition = 'background-color 0.3s ease';
           
           sliderInput.addEventListener('input', () => {
             slider.onChange(sliderInput.value); // Use sliderInput.value here
