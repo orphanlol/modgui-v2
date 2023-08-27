@@ -55,6 +55,30 @@ const modGUI = {
 
     menu.sliders.push(slider);
   },
+  createLiveOverlay(headerText) {
+    const overlayDiv = document.createElement('div');
+    overlayDiv.id = 'overlayDiv';
+    overlayDiv.style.position = 'fixed';
+    overlayDiv.style.top = '0';
+    overlayDiv.style.left = '0';
+    overlayDiv.style.width = '100%';
+    overlayDiv.style.height = '100%';
+    overlayDiv.style.backgroundColor = 'rgb(39 38 38 / 70%)';
+    overlayDiv.style.zIndex = '9998';
+    overlayDiv.style.backdropFilter = 'blur(5px)';
+    
+    const header = document.createElement('div');
+    header.id = 'overlayHeader';
+    header.style.color = 'white';
+    header.style.textAlign = 'center';
+    header.style.padding = '10px';
+    header.style.fontWeight = 'bold';
+    header.style.fontSize = '30px';
+    header.textContent = headerText;
+    overlayDiv.appendChild(header);
+    document.body.appendChild(overlayDiv);
+    return overlayDiv
+  },
 
   render() {
     modGUI.GUI.menus.forEach(menu => {
