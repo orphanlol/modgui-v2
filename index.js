@@ -11,42 +11,44 @@ const modGUI = {
       position,
       top,
       left,
-      buttons: [],
-      sliders: [],
-      texts: [],
+      elements: [], // Store all elements in this array
     };
-
+  
     modGUI.GUI.menus.push(menu);
-
+  
     return menu;
   },
 
   addButton(menu, label, callback) {
     const button = {
+      type: 'button', // Indicate the element type
       label,
       callback,
     };
-
-    menu.buttons.push(button);
+  
+    menu.elements.push(button);
   },
-
+  
   addSlider(menu, label, min, max, value, onChange) {
     const slider = {
+      type: 'slider', // Indicate the element type
       label,
       min,
       max,
       value,
       onChange,
     };
-
-    menu.sliders.push(slider);
+  
+    menu.elements.push(slider);
   },
+  
   addText(menu, content) {
     const text = {
+      type: 'text', // Indicate the element type
       content,
     };
   
-    menu.texts.push(text);
+    menu.elements.push(text);
   },
   createLiveOverlay(headerText) {
     const overlayDiv = document.createElement('div');
@@ -74,41 +76,47 @@ const modGUI = {
   },
 
   render() {
-    modGUI.GUI.menus.forEach(menu => {
-      const menuContainer = document.createElement('div');
-      menuContainer.id = menu.id;
-      menuContainer.style.position = menu.position;
-      menuContainer.style.top = menu.top;
-      menuContainer.style.left = menu.left;
-      menuContainer.style.padding = '20px';
-      menuContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-      menuContainer.style.color = '#fff';
-      menuContainer.style.fontSize = '15px';
-      menuContainer.style.zIndex = '9999';
-      menuContainer.style.borderRadius = '10px';
-      menuContainer.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.3)';
-      menuContainer.style.width = '300px';
+  modGUI.GUI.menus.forEach(menu => {
+    const menuContainer = document.createElement('div');
+    menuContainer.id = menu.id;
+    menuContainer.style.position = menu.position;
+    menuContainer.style.top = menu.top;
+    menuContainer.style.left = menu.left;
+    menuContainer.style.padding = '20px';
+    menuContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    menuContainer.style.color = '#fff';
+    menuContainer.style.fontSize = '15px';
+    menuContainer.style.zIndex = '9999';
+    menuContainer.style.borderRadius = '10px';
+    menuContainer.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.3)';
+    menuContainer.style.width = '300px';
 
-      const menuHeader = document.createElement('div');
-        menuHeader.id = `${menu.id}header`;  // Add a unique ID for each menu header
-        menuHeader.style.fontWeight = 'bold';
-        menuHeader.style.textAlign = 'center';
-        menuHeader.style.fontSize = '25px';
-        menuHeader.style.cursor = 'move';
-        menuHeader.style.padding = '5px';
-        menuHeader.textContent = menu.title;
-        menuContainer.appendChild(menuHeader);
+    const menuHeader = document.createElement('div');
+    menuHeader.id = `${menu.id}header`;
+    menuHeader.style.fontWeight = 'bold';
+    menuHeader.style.textAlign = 'center';
+    menuHeader.style.fontSize = '25px';
+    menuHeader.style.cursor = 'move';
+    menuHeader.style.padding = '5px';
+    menuHeader.textContent = menu.title;
+    menuContainer.appendChild(menuHeader);
 
-      menu.buttons.forEach((button, index) => {
+    menu.elements.forEach(element => {
+      const elemContainer = document.createElement('div');
+      // Customize container styling here based on element type
+      elemContainer.style.marginBottom = '10px';
+
+      if (element.type === 'button') {
+        // Render button
         const buttonElem = document.createElement('div');
+        // Customize button styling here
         buttonElem.className = 'modMenuItem';
         buttonElem.style.cursor = 'pointer';
-        buttonElem.style.marginBottom = '10px';
         buttonElem.style.padding = '10px';
         buttonElem.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
         buttonElem.style.borderRadius = '5px';
         buttonElem.style.transition = 'background-color 0.3s ease';
-        buttonElem.textContent = button.label;
+        buttonElem.textContent = element.label;
 
         buttonElem.addEventListener('mouseenter', () => {
           buttonElem.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
@@ -118,29 +126,27 @@ const modGUI = {
           buttonElem.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
         });
 
-        buttonElem.addEventListener('click', button.callback);
+        buttonElem.addEventListener('click', element.callback);
 
-        menuContainer.appendChild(buttonElem);
-      });
-
-      menu.sliders.forEach((slider, index) => {
-        const sliderContainer = document.createElement('div');
-        sliderContainer.style.marginBottom = '10px';
-
+        elemContainer.appendChild(buttonElem);
+      } else if (element.type === 'slider') {
+        // Render slider
         const sliderHeader = document.createElement('div');
-        sliderHeader.textContent = slider.label;
+        // Customize slider header styling here
         sliderHeader.style.cursor = 'move';
         sliderHeader.style.padding = '5px';
-        sliderContainer.appendChild(sliderHeader);
+        sliderHeader.textContent = element.label;
+        elemContainer.appendChild(sliderHeader);
 
         const sliderInput = document.createElement('input');
+        // Customize slider input styling here
         sliderInput.type = 'range';
-        sliderInput.min = slider.min;
-        sliderInput.max = slider.max;
-        sliderInput.value = slider.value;
+        sliderInput.min = element.min;
+        sliderInput.max = element.max;
+        sliderInput.value = element.value;
 
         const sliderValueSpan = document.createElement('span');
-        sliderValueSpan.textContent = slider.value;
+        sliderValueSpan.textContent = element.value;
         sliderValueSpan.style.float = 'right';
 
         sliderInput.style.width = '100%';
@@ -156,33 +162,31 @@ const modGUI = {
         sliderInput.style.transition = 'background-color 0.3s ease';
 
         sliderInput.addEventListener('input', () => {
-          slider.onChange(sliderInput.value);
-          sliderValueSpan.textContent = sliderInput.value
-          
+          element.onChange(sliderInput.value);
+          sliderValueSpan.textContent = sliderInput.value;
         });
-        menu.texts.forEach((text, index) => {
-          const textElem = document.createElement('div');
-          textElem.className = 'modTextItem';
-          textElem.style.marginBottom = '10px';
-          textElem.style.padding = '5px';
-          textElem.style.backgroundColor = 'rgba(115 115 115 / 10%)';
-          textElem.style.borderRadius = '5px';
-          textElem.textContent = text.content;
-        
-          menuContainer.appendChild(textElem);
-        })
 
-        sliderContainer.appendChild(sliderInput);
+        elemContainer.appendChild(sliderInput);
         sliderHeader.appendChild(sliderValueSpan);
-      
-        menuContainer.appendChild(sliderContainer);
-        menuContainer.appendChild(sliderContainer);
-      });
+      } else if (element.type === 'text') {
+        // Render text
+        const textElem = document.createElement('div');
+        // Customize text styling here
+        textElem.className = 'modTextItem';
+        textElem.style.padding = '5px';
+        textElem.style.backgroundColor = 'rgba(115 115 115 / 10%)';
+        textElem.style.borderRadius = '5px';
+        textElem.textContent = element.content;
+        elemContainer.appendChild(textElem);
+      }
 
-      document.body.appendChild(menuContainer);
-      modGUI.dragElement(menuContainer);
+      menuContainer.appendChild(elemContainer);
     });
-  },
+
+    document.body.appendChild(menuContainer);
+    modGUI.dragElement(menuContainer);
+  });
+},
 
   dragElement(elmnt) {
     let pos1 = 0,
