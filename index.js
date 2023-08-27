@@ -3,7 +3,9 @@ const modGUI = {
   GUI: {
     menus: [],
   },
-
+  getMenu(menu) {
+    return document.getElementById(menu.id)
+  },
   createMenu(title, id, position, top, left) {
     const menu = {
       title,
