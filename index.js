@@ -1,18 +1,3 @@
-// Load scripts without issues
-function addScript(src) {
-    const script = document.createElement("script");
-    script.src = src;
-    const nonceElement = document.querySelector("[nonce]");
-    if (nonceElement) {
-        script.nonce = nonceElement.nonce;
-    }
-    document.body.appendChild(script);
-}
-
-// Load React
-addScript('https://unpkg.com/react@17.0.2/umd/react.development.js')
-addScript('https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js')
-
 // Framework functions
 const modGUI = {
   GUI: {
@@ -213,13 +198,3 @@ const modGUI = {
   },
 };
 
-// Delay rendering until React is available
-function renderReactComponentWhenReady() {
-    if (window.React && window.ReactDOM) {
-      modGUI.render();
-    } else {
-      setTimeout(renderReactComponentWhenReady, 100);
-    }
-  }
-  
-renderReactComponentWhenReady();
