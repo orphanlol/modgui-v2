@@ -131,6 +131,10 @@ const modGUI = {
         sliderInput.max = slider.max;
         sliderInput.value = slider.value;
 
+        const sliderValueSpan = document.createElement('span');
+        sliderValueSpan.textContent = slider.value;
+        sliderValueSpan.style.float = 'right';
+
         sliderInput.style.width = '100%';
         sliderInput.style.height = '20px';
         sliderInput.style.padding = '0';
@@ -144,10 +148,15 @@ const modGUI = {
         sliderInput.style.transition = 'background-color 0.3s ease';
 
         sliderInput.addEventListener('input', () => {
-        slider.onChange(sliderInput.value);
+          slider.onChange(sliderInput.value);
+          sliderValueSpan.textContent = sliderInput.value
+          
         });
 
         sliderContainer.appendChild(sliderInput);
+        sliderHeader.appendChild(sliderValueSpan);
+      
+        menuContainer.appendChild(sliderContainer);
         menuContainer.appendChild(sliderContainer);
       });
 
