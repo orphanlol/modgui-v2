@@ -21,6 +21,7 @@ This library provides a basic way to create GUI menus and buttons using JavaScri
 
 // Create main menu w/ buttons
 const mainMenu = modGUI.createMenu('Main Menu', 'main-menu', 'absolute', '20px', '20px');
+modGUI.addText(mainMenu, 'This is some sample text.');
 modGUI.addButton(mainMenu, 'Button 1', () => alert('Button 1 clicked'));
 modGUI.addButton(mainMenu, 'Button 2', () => alert('Button 2 clicked'));
 modGUI.addSlider(
