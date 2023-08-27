@@ -13,6 +13,7 @@ const modGUI = {
       left,
       buttons: [],
       sliders: [],
+      texts: [],
     };
 
     modGUI.GUI.menus.push(menu);
@@ -39,6 +40,13 @@ const modGUI = {
     };
 
     menu.sliders.push(slider);
+  },
+  addText(menu, content) {
+    const text = {
+      content,
+    };
+  
+    menu.texts.push(text);
   },
   createLiveOverlay(headerText) {
     const overlayDiv = document.createElement('div');
@@ -152,6 +160,17 @@ const modGUI = {
           sliderValueSpan.textContent = sliderInput.value
           
         });
+        menu.texts.forEach((text, index) => {
+          const textElem = document.createElement('div');
+          textElem.className = 'modTextItem';
+          textElem.style.marginBottom = '10px';
+          textElem.style.padding = '5px';
+          textElem.style.backgroundColor = 'rgba(115 115 115 / 10%)';
+          textElem.style.borderRadius = '5px';
+          textElem.textContent = text.content;
+        
+          menuContainer.appendChild(textElem);
+        })
 
         sliderContainer.appendChild(sliderInput);
         sliderHeader.appendChild(sliderValueSpan);
