@@ -16,7 +16,7 @@ This library provides a basic way to create GUI menus and buttons using JavaScri
 1. Open the developer console in your browser.
 2. Copy and paste the library code from `gui-library.js` into the console.
 3. Use the provided functions to create menus and buttons, and then call `renderGUI()` to display the GUI.
-
+4. this copy of the repository does not include `gui-library.js`, so ignore `number 2.`
 ```javascript
 
 // Create main menu w/ buttons
