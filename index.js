@@ -1,3 +1,9 @@
+/*
+
+ignore the slider unless you are trying to implement it in something
+
+*/
+
 // Framework functions
 const modGUI = {
   GUI: {
